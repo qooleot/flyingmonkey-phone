@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title></title>
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src='/mapbox.js/mapbox.js'></script>
+  <link href='/mapbox.js/mapbox.css' rel='stylesheet' />
+  <style>
+    body { margin:0; padding:0; }
+    .map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+<div id='map-one' class='map'> </div>
+<script>
+  L.mapbox.accessToken = 'pk.eyJ1Ijoid2F0ZWltIiwiYSI6ImNpaGpvbGpobTA1dWJ0amo3Njc3czd2eXcifQ.6PZ_61e90n0qn6cC4LKciA';
+
+  var geoJSON = {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-155.469247,19.823061]},"properties":{"title":"solo","marker-size":"large","marker-symbol":"star","marker-color":"#FFDF00"}}]};
+  var map = L
+   .mapbox.map('map-one', 'mapbox.streets', { scrollWheelZoom: false })
+   .setView([19.823061,-155.469247], 14);
+  var myLayer = L.mapbox.featureLayer().addTo(map);
+  var flightPathOptions = { color: '#FFDF00', smoothFactor:3.5 };
+  var flightPath = L.polyline([],flightPathOptions).addTo(map);
+
+  myLayer.setGeoJSON(geoJSON);
+
+  function updateGPSCoord()
+  {
+    $.getJSON('get_gps',function(jd)
+    {
+      var newGeoJSON = { "type": "FeatureCollection", features:jd.features }
+
+      myLayer.setGeoJSON(newGeoJSON);
+      map.setView([jd.center.lat,jd.center.long]);
+    });
+  }
+
+  function updateFlightPath()
+  {
+    data = { deviceId:'*' };
+    $.ajax(
+    {
+      type:"POST",
+      url: "nav/getFlightPath",
+      data: data,
+      success: function(data)
+      {
+        var path = [];
+
+        if(data && data.current)
+        {
+          for(var i = 0;i < data.current.length;i++) path.push(L.latLng(data.current[i].lat,data.current[i].long));
+        }
+        flightPath.setLatLngs(path);
+      }
+    });
+  }
+
+  function update()
+  {
+    updateGPSCoord();
+    updateFlightPath();
+  }
+
+  $(document).ready(function() { setInterval(update,1000) });
+</script>
+</body>
+</html>
