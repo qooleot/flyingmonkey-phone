@@ -34,7 +34,7 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <title>Flying Monkey</title>
     </head>
     <body>
         <div class="app">
@@ -42,10 +42,23 @@
             <div id="deviceready" class="blink">
                 <p class="event received">Sending GPS Location</p>
             </div>
-            <div id="gps"></div>   
+            <div id="gps"></div>
+            <div style="margin-left: 20px;">
+                <div style="float:left;"><label for="on_off" style="width: 60px; display: inline-block;">Track:</label><input id="on_off" type="checkbox" /></div>
+                <div stylle="margin-left: 20px;"><label for="ip_addr" style="padding-left: 40px; width: 60px; display: inline-block;">IP Addr:</label><input style="width: 70px" id="ip_addr" type="text" value="10.1.1.10" /></div>
+            </div>
+            <div style="margin-left: auto; margin-right: auto; width: 250px;position: relative;">
+                <div style="position:absolute;left:10px;top:10px">
+                  <input type="text" class="dial" id="requested_direction" data-min="0" data-max="359" data-fgColor="#ffec03" data-bgColor="#666" value="0" data-width="250" data-height="250" data-displayInput=false data-cursor=true data-thickness=.27>
+                </div>
+                <div style="position:absolute;left:44px;top:44px">
+                    <input type="text" class="dial" id="actual_direction" data-min="0" data-max="359" value="0" data-bgColor="#333" data-width="182" data-height="252" data-cursor=true data-readOnly=true data-thickness=.46>
+                </div>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.knob.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/geo.js"></script>
     </body>

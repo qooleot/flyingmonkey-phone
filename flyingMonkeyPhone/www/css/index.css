@@ -56,9 +56,9 @@ body {
 }
 
 h1 {
-    font-size:24px;
+    font-size:20px;
     font-weight:normal;
-    margin-top:50px;
+    margin-top:25px;
     overflow:visible;
     padding:0px;
     text-align:center;
@@ -107,7 +107,18 @@ h1 {
 #gps {
   background-color: #fff;
   border-radius: 15px;
-  height: 160px;
-  padding: 20px;
-  margin: 20px;
+  height: 110px;
+  padding: 18px;
+  margin: 15px 20px 15px 20px;
+}
+
+input[type=checkbox] {
+    /* All browsers except webkit*/
+    transform: scale(1.6);
+
+    /* Webkit browsers*/
+    -webkit-transform: scale(1.6);
+}
+input[type=text] {
+    height: 16px;
 }

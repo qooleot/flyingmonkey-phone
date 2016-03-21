@@ -38,6 +38,13 @@ var app = {
         var receivedElement = parentElement.querySelector('.received');
         receivedElement.setAttribute('style', 'display:block;');
 
+        $(".dial").knob();
+
+        $('#on_off').on('click', function() {
+           var isChecked = $(this).prop('checked');
+           trackChange(isChecked);
+        });
+
         app.geoStart();
 
     },
